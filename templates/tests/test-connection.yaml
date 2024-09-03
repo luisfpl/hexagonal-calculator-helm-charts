@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "hexagonal-calculator.fullname" . }}-test-connection"
+  labels:
+    {{- include "hexagonal-calculator.labels" . | nindent 4 }}
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "hexagonal-calculator.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
